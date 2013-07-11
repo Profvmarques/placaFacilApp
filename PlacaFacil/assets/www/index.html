@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>PLACA LEGAL</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<script src="js/jquery.js"></script>
+<script src="js/jquery.mobile-1.3.1.min.js"></script>
+<script src="js/jquery.jsonp-2.4.0.min.js"></script>
+<script src="js/fastclick.js"></script>
+<script src="js/cordova-2.5.0.js"></script>
+<link rel="stylesheet" href="css/jquery.mobile-1.3.1.min.css">
+
+<!-- FastClick -->
+<script type="application/javascript" src="js/fastclick.js"></script>
+<script type="application/javascript">
+	
+	window.addEventListener('load', function () {
+		FastClick.attach(document.body);
+	}, false);
+
+</script>
+
+<style type="text/css">
+.header {
+	position: fixed;
+	z-index: 10;
+	top: 0;
+	width: 100%
+}
+
+.content {
+	padding: 45px 15px
+}
+
+.footer {
+	position: fixed;
+	z-index: 10;
+	bottom: 0;
+	width: 100%
+}
+</style>
+
+</head>
+<body>
+	<div data-role="page" id="pageConsultarPlaca">
+		<div data-role="header" data-theme="b">
+			<img src="images/cabecalho.png" width="100%" height="59px" />
+		</div>
+		<div data-role="content">
+			<div align="center">
+				<font style="font-weight: bold;">INFORME A PLACA DO VEÍCULO</font>
+			</div>
+			<form id="formConsultarPlaca">
+				<input type="text" id="placa"
+					style="background-image: url('images/placa-vazia.png'); background-repeat: no-repeat; background-position: center; height: 98px; width: 288px; color: #FFFFFF; font-size: 40px; font-weight: bold; padding: 10px; border: none;"
+					required /> <br>
+				<div align="center">
+					<a data-theme="" id="btnConsultar" onclick="consultarPlaca()">
+						<img src="images/clique-aqui.png" />
+					</a>
+				</div>
+
+			</form>
+			<div id="resultado">
+				<div id="situacao"></div>
+				<div id="veiculo"></div>
+				<div id="dataHora"></div>
+			</div>
+		</div>
+
+		<div data-role="footer">
+			<img src="images/rodape.png" width="100%" height="65px" />
+		</div>
+	</div>
+</body>
+
+<script>
+	var DOMINIO = "http://exmolabs.appspot.com";
+	var MSG_SEM_INTERNET = "Sem conexão internet." + "Verifique sua configuração de rede e tente novamente mais tarde."
+
+	$('#resposta').hide();
+
+	function hasValue(field) {
+		return (field != null && field != undefined && $.trim(field) != "");
+	}
+
+	function checkInternet() { /*
+	    var networkState = navigator.network.connection.type;
+
+	    if (networkState == Connection.NONE) {
+	    	alert(MSG_SEM_INTERNET);
+	    	return false;
+	    } */
+		return true;
+	}
+
+	function consultarPlaca() {
+		if (!hasValue($("#placa").val())) {
+			alert("Preencha todas as informações");
+			return false;
+		}
+
+		if (!isPlacaValida($("#placa").val())) {
+			alert("Padrão de placa inválido");
+			return false;
+		}
+
+		if (!checkInternet()) {
+			return false;
+		}
+
+		//navigator.notification.activityStart();	
+
+		var url = DOMINIO + "/placa/" + $("#placa").val() + "?callback=?";
+
+		$.jsonp({
+			"url" : url,
+			"success" : function(response, textStatus) {
+				//navigator.notification.activityStop();
+				if (response.codRet == "99") {
+					$('#resposta').hide();
+					alert("Nenhum registro de furto para este veículo");
+				} else {
+					var veiculo = response.veiculo;
+					$('#situacao').text("Situação "+veiculo.situacao.codigo+" - "+veiculo.situacao.descricao);
+					$('#veiculo').text(veiculo.marca + "/" + veiculo.modelo + " - " + veiculo.cor);
+					$('#dataHora').text("Consulta realizada em " + response.data + " " + response.hora);
+					$('#resposta').show();
+				}
+			},
+			"error" : function(xOptions, textStatus) {
+				//navigator.notification.activityStop();
+				alert("Ocorreu um erro na consulta do veículo. " + url + " " + MSG_SEM_INTERNET);
+			}
+		});
+	}
+
+	function isPlacaValida(placa) {
+		var er = /[a-z]{3}-?\d{4}/gim;
+		er.lastIndex = 0;
+		return er.test(placa);
+	}
+</script>
+</html>
+
