@@ -163,7 +163,7 @@
 
 		//navigator.notification.activityStart();	
 
-		var url = DOMINIO + "/placa/" + $("#placa").val() + "?callback=?";
+		var url = DOMINIO + "/placa/" + $("#placa").val().toUpperCase() + "?callback=?";
 
 		$.jsonp({
 			"url" : url,
