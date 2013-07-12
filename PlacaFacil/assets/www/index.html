@@ -163,7 +163,7 @@
 
 		//navigator.notification.activityStart();	
 
-		var url = DOMINIO + "/placa/" + $("#placa").val() + "?callback=?";
+		var url = DOMINIO + "/placa/" + $("#placa").val().toUpperCase() + "?callback=?";
 
 		$.jsonp({
 			"url" : url,
@@ -180,7 +180,7 @@
 						situacaoRoubado();
 					}
 					//$('#situacao').text("Situação "+veiculo.situacao.codigo+" - "+veiculo.situacao.descricao);
-					$('#veiculo').text(veiculo.marca + "/" + veiculo.modelo + " - " + veiculo.cor);
+					$('#veiculo').html("<h3>"+veiculo.marca + "/" + veiculo.modelo + " - " + veiculo.cor + "</h3>");
 					$('#dataHora').text("Consulta realizada em " + response.data + " " + response.hora);
 					$('#resposta').show();
 				}
