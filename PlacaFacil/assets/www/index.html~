@@ -54,8 +54,8 @@
 			</div>
 			<form id="formConsultarPlaca">
 				<div style="text-align:center;">
-				<input type="text" id="placa" size="7" maxlength="7"
-					style="background-image: url('images/placa-vazia.png'); background-repeat: no-repeat; background-position: center; height: 98px; width: 288px; color: #FFFFFF; font-size: 40px; font-weight: bold; padding: 10px; border: none;"
+				<input type="text" id="placa" maxlength="7"
+					style="background-image: url('images/placa-vazia.png'); background-repeat: no-repeat; background-position: center; height: 98px; width: 288px; color: #FFFFFF; font-size: 40px; font-weight: bold; padding: 10px; border: none; text-align:center;"
 					required /> <br>
 				</div>
 				<div align="center">
