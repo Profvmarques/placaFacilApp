@@ -82,7 +82,9 @@
 						<img src="images/carro-roubado.png" />
 					</a>
 				</div>
+				<p>&nbsp;</p>
 				<div id="veiculo"></div>
+				<p>&nbsp;</p>
 				<div id="dataHora"></div>
 			</div>
 		</div>
@@ -97,10 +99,7 @@
 	var DOMINIO = "http://exmolabs.appspot.com";
 	var MSG_SEM_INTERNET = "Sem conexão internet." + "Verifique sua configuração de rede e tente novamente mais tarde."
 
-	$('#resposta').hide();
-	$('#app-conectando').hide();
-	$('#situacao-legal').hide();
-	$('#situacao-roubado').hide();
+	initTela();
 
 	function hasValue(field) {
 		return (field != null && field != undefined && $.trim(field) != "");
@@ -114,6 +113,14 @@
 	    	return false;
 	    } */
 		return true;
+	}
+
+	function initTela() {
+		$('#btnConsultar').show();
+		$('#resposta').hide();
+		$('#app-conectando').hide();
+		$('#situacao-legal').hide();
+		$('#situacao-roubado').hide();
 	}
 
 	function appConectando() {
@@ -163,7 +170,7 @@
 			"success" : function(response, textStatus) {
 				//navigator.notification.activityStop();
 				if (response.codRet == "99") {
-					$('#resposta').hide();
+					initTela();
 					alert("Nenhum registro de furto para este veículo");
 				} else {
 					var veiculo = response.veiculo;
@@ -180,6 +187,7 @@
 			},
 			"error" : function(xOptions, textStatus) {
 				//navigator.notification.activityStop();
+				initTela();
 				alert("Ocorreu um erro na consulta do veículo. " + url + " " + MSG_SEM_INTERNET);
 			}
 		});
