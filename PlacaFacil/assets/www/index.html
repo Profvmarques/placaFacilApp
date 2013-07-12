@@ -54,7 +54,7 @@
 			</div>
 			<form id="formConsultarPlaca">
 				<input type="text" id="placa" maxlength="7"
-					style="background-image: url('images/placa-vazia.png'); background-repeat: no-repeat; background-position: center; height: 98px; width: 288px; color: #FFFFFF; font-size: 40px; font-weight: bold; padding: 10px; border: none; text-align:center;"
+					style="background-image: url('images/placa-vazia.png'); background-repeat: no-repeat; background-position: center; height: 98px; width: 280px; color: #FFFFFF; font-size: 40px; font-weight: bold; padding: 10px; border: none; text-align:center;"
 					required /> <br>
 				<div align="center">
 					<a data-theme="" id="btnConsultar" onclick="consultarPlaca()">
@@ -84,13 +84,8 @@
 					</a>
 				</div>
 				<p>&nbsp;</p>
-				<div id="veiculo"></div>
-				<p>&nbsp;</p>
-				<div id="novaConsulta">
-					<a href="#" id="btnNovaConsulta" data-theme="e" data-role="button" data-icon="arrow-l" data-iconpos="left" data-inline="true" onclick="initTela();">Voltar</a>
-				</div>
-				<p>&nbsp;</p>
-				<div id="dataHora"></div>
+				<h3 id="veiculo"></h3>
+				<h4 id="dataHora"></h4>
 			</div>
 		</div>
 
@@ -119,6 +114,8 @@
 	    } */
 		return true;
 	}
+	
+	$('#placa').click(function(){initTela();});
 
 	function initTela() {
 		$('#btnConsultar').show();
@@ -128,7 +125,8 @@
 		$('#situacao-roubado').hide();
 		$('#veiculo').empty();
 		$('#dataHora').empty();
-		$('#novaConsulta').hide();
+		$('#resultado').hide();
+		
 	}
 
 	function appConectando() {
@@ -143,7 +141,7 @@
 		$('#app-conectando').hide();
 		$('#situacao-legal').show();
 		$('#situacao-roubado').hide();
-		$('#novaConsulta').show();
+		$('#resultado').show();
 	}
 
 	function situacaoRoubado() {
@@ -151,7 +149,7 @@
 		$('#app-conectando').hide();
 		$('#situacao-legal').hide();
 		$('#situacao-roubado').show();
-		$('#novaConsulta').show();
+		$('#resultado').show();
 	}
 
 	function consultarPlaca() {
@@ -190,7 +188,7 @@
 						situacaoRoubado();
 					}
 					//$('#situacao').text("Situação "+veiculo.situacao.codigo+" - "+veiculo.situacao.descricao);
-					$('#veiculo').html("<h3>"+veiculo.marca + "/" + veiculo.modelo + " - " + veiculo.cor + "</h3>");
+					$('#veiculo').text(veiculo.marca + "/" + veiculo.modelo + " - " + veiculo.cor );
 					$('#dataHora').text("Consulta realizada em " + response.data + " " + response.hora);
 					$('#resposta').show();
 				}
