@@ -62,11 +62,16 @@
 				</div>
 
 			</form>
-			<div id="resultado">
+			<div id="resultado" align="center">
 				<!--
 				<div id="situacao">
 				</div>
 				-->
+				<div id="app-conectando">
+					<a data-theme="">
+						<img src="images/checando.png" />
+					</a>
+				</div>
 				<div id="situacao-legal">
 					<a data-theme="">
 						<img src="images/situacao-legal.png" />
@@ -110,6 +115,27 @@
 		return true;
 	}
 
+	function appConectando() {
+		$('#btnConsultar').hide();
+		$('#app-conectando').show();
+		$('#situacao-legal').hide();
+		$('#situacao-roubado').hide();
+	}
+
+	function situacaoLegal() {
+		$('#btnConsultar').hide();
+		$('#app-conectando').hide();
+		$('#situacao-legal').show();
+		$('#situacao-roubado').hide();
+	}
+
+	function situacaoRoubado() {
+		$('#btnConsultar').hide();
+		$('#app-conectando').hide();
+		$('#situacao-legal').hide();
+		$('#situacao-roubado').show();
+	}
+
 	function consultarPlaca() {
 		if (!hasValue($("#placa").val())) {
 			alert("Informe a placa do veículo");
@@ -125,6 +151,8 @@
 			return false;
 		}
 
+		appConectando();
+
 		//navigator.notification.activityStart();	
 
 		var url = DOMINIO + "/placa/" + $("#placa").val() + "?callback=?";
@@ -139,11 +167,9 @@
 				} else {
 					var veiculo = response.veiculo;
 					if (veiculo.situacao.codigo == "00") {
-						$('#situacao-legal').show();
-						$('#situacao-roubado').hide();
+						situacaoLegal();
 					} else {
-						$('#situacao-legal').hide();
-						$('#situacao-roubado').show();
+						situacaoRoubado();
 					}
 					//$('#situacao').text("Situação "+veiculo.situacao.codigo+" - "+veiculo.situacao.descricao);
 					$('#veiculo').text(veiculo.marca + "/" + veiculo.modelo + " - " + veiculo.cor);
