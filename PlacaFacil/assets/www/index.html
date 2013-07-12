@@ -86,6 +86,10 @@
 				<p>&nbsp;</p>
 				<div id="veiculo"></div>
 				<p>&nbsp;</p>
+				<div id="novaConsulta">
+					<a href="#" id="btnNovaConsulta" data-theme="e" data-role="button" data-icon="arrow-l" data-iconpos="left" data-inline="true" onclick="initTela();">Voltar</a>
+				</div>
+				<p>&nbsp;</p>
 				<div id="dataHora"></div>
 			</div>
 		</div>
@@ -122,6 +126,9 @@
 		$('#app-conectando').hide();
 		$('#situacao-legal').hide();
 		$('#situacao-roubado').hide();
+		$('#veiculo').empty();
+		$('#dataHora').empty();
+		$('#novaConsulta').hide();
 	}
 
 	function appConectando() {
@@ -136,6 +143,7 @@
 		$('#app-conectando').hide();
 		$('#situacao-legal').show();
 		$('#situacao-roubado').hide();
+		$('#novaConsulta').show();
 	}
 
 	function situacaoRoubado() {
@@ -143,6 +151,7 @@
 		$('#app-conectando').hide();
 		$('#situacao-legal').hide();
 		$('#situacao-roubado').show();
+		$('#novaConsulta').show();
 	}
 
 	function consultarPlaca() {
